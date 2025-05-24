@@ -5,7 +5,7 @@ def send_email(subject, body, to_email):
     smtp_server = 'smtp.gmail.com'  # Change if using different SMTP server
     smtp_port = 587
     sender_email = 'infrastructure@redbackops.com'  # Your email address
-    sender_password = 'Vumo3117'  # App password if using Gmail with 2FA
+    sender_password = 'Gigi@1090'  # App password if using Gmail with 2FA
 
     msg = EmailMessage()
     msg['Subject'] = subject
