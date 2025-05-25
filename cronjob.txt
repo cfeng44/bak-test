@@ -1,0 +1,2 @@
+# Run autobackupscript.py every day at 5:40 PM 
+35 17 * * * /usr/bin/python3 /home/susmitha/backup/autobackupscript.py
