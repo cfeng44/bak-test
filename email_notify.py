@@ -1,4 +1,3 @@
-susmitha@infra-test:~/susmitha$ cat emailnotify.py
 import smtplib
 from email.message import EmailMessage
 
