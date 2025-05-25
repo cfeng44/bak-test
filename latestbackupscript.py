@@ -7,7 +7,7 @@ import sys
 import shutil
 import subprocess
 from datetime import datetime
-from emailnotify import send_email # Ensure this module is in the same directory
+from emailnotify import send_email  # Ensure this module is in the same directory
 
 # Settings
 home_dir = os.path.expanduser("~")
@@ -80,6 +80,10 @@ def cleanup_old_snapshots():
         print(f"No need to delete snapshots. Current count: {len(snapshots)}")
 
 def main():
+    # Log that the cron job ran
+    with open("/home/susmitha/susmitha/cronlog.txt", "a") as log:
+        log.write(f"Cron job triggered at: {datetime.now()}\n")
+
     try:
         check_disk_space(path=backup_root, threshold=disk_threshold_percent)
         take_snapshot()
@@ -89,7 +93,7 @@ def main():
         send_email(
             subject="Backup Successful",
             body=f"Backup and cleanup completed successfully at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.",
-            to_email="recipient-email@example.com"  # Replace with actual team email
+            to_email="infrastructure@redbackops.com"
         )
 
     except Exception as e:
@@ -97,7 +101,7 @@ def main():
         send_email(
             subject="Backup Failed",
             body=f"Backup or cleanup failed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.\n\nError Details:\n{str(e)}",
-            to_email="recipient-email@example.com"
+            to_email="infrastructure@redbackops.com"
         )
         print(f"Error: {str(e)}")
         sys.exit(1)
