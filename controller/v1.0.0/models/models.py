@@ -16,6 +16,9 @@ class Policy(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     name: str
     description: Optional[str] = None
+    tool: str  # Added tool for backup tool type (e.g rsync)
+    copies: int  # Added number of copies for backup
+    frequency: str  # Added backup frequency (e.g., weekly)
 
 # Containers
 class Container(SQLModel, table=True):
@@ -25,6 +28,7 @@ class Container(SQLModel, table=True):
     network: Optional[str] = None
     bind_mount: Optional[str] = None
     config_files: Optional[str] = None
+    policy_id: int = Field(foreign_key="policy.id")
 
 # Databases
 class Database(SQLModel, table=True):
@@ -34,7 +38,8 @@ class Database(SQLModel, table=True):
     version: Optional[str] = None
     primary_replica: Optional[str] = None
     container_id: int = Field(foreign_key="container.id")
-
+    policy_id: int = Field(foreign_key="policy.id")
+    
     # Ensure proper conversion of Enum values to strings and vice-versa
     @classmethod
     def from_orm(cls, orm_instance):
